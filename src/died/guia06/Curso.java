@@ -1,5 +1,6 @@
 package died.guia06;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,12 @@ public class Curso {
 	 * @return
 	 */
 	public Boolean inscribir(Alumno a) {
-		log.registrar(this, "inscribir ",a.toString());
+		try {
+			log.registrar(this, "inscribir ",a.toString());
+		} catch (IOException e) {
+			System.out.println("Sucedió un error al inscribir un alumno. Error:" + e.getMessage())
+			e.printStackTrace();
+		}
 		return false;
 	}
 	
