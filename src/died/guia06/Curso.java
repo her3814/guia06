@@ -24,8 +24,14 @@ public class Curso {
 	private Integer creditos;
 	private Integer creditosRequeridos;
 	
+	public Integer getCreditos() {
+		return this.creditos;
+	}
+	
+	
 	private Registro log;
 	
+		
 	public Curso() {
 		super();
 		this.inscriptos = new ArrayList<Alumno>();
@@ -50,7 +56,7 @@ public class Curso {
 		try {
 			log.registrar(this, "inscribir ",a.toString());
 		} catch (IOException e) {
-			System.out.println("Sucedió un error al inscribir un alumno. Error:" + e.getMessage())
+			System.out.println("Sucedió un error al inscribir un alumno. Error:" + e.getMessage());
 			e.printStackTrace();
 		}
 		return false;
@@ -61,7 +67,12 @@ public class Curso {
 	 * imprime los inscriptos en orden alfabetico
 	 */
 	public void imprimirInscriptos() {
-		log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
+		try {
+			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
+		} catch (IOException e) {
+			System.out.println("Sucedió un error al imprimir alumnos inscriptos. Error:" + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 
