@@ -1,5 +1,6 @@
 package died.guia06;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,28 +31,48 @@ public class Alumno implements Comparable<Alumno> {
 		
 		this.nombre = nombre;
 		this.nroLibreta = nroLibreta;
+		this.aprobados = new ArrayList<Curso>();
+		this.cursando = new ArrayList<Curso>();
+		
 	}
+
 
 	public int creditosObtenidos() {
 		int creditos = 0;
-		for(Curso curso : aprobados) {
-			creditos += curso.getCreditos();
-		}
+		if(aprobados != null)
+			for(Curso curso : aprobados) {
+				creditos += curso.getCreditos();
+			}
+		
 		return creditos;
 	}
 
-	public void aprobar(Curso c) {
+	public void aprobar(Curso c) throws IllegalArgumentException{
+		if(!this.cursando.contains(c)) {
+			throw new IllegalArgumentException("No puede aprobar un curso sin estar cursandolo");
+		}
+		
 		if(this.cursando.contains(c)) {
 			this.cursando.remove(c);
 			this.aprobados.add(c);
 		}
 	}
 
-	public void inscripcionAceptada(Curso c) {
-			this.cursando.add(c);
+	public void inscripcionAceptada(Curso c) throws IllegalArgumentException{
+		if(this.cursando.size()>=3) {
+			throw new IllegalArgumentException("No puede inscribirse a mas de 3 cursos a la vez.");
+		}		
+			this.cursando.add(c);			
 	}
-	
-	public int getCantidadCursosInscripto() {
+
+	public boolean inscriptoEn(Curso curso) {
+		return cursando.contains(curso);
+	}
+
+	public boolean aproboCurso(Curso curso) {
+		return aprobados.contains(curso);
+	}
+	public int getCantidadCursosInscripto() {		
 		return this.cursando.size();
 	}
 

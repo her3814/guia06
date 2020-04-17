@@ -25,7 +25,7 @@ public class Curso {
 	private Integer creditosRequeridos;
 	
 	public Integer getCreditos() {
-		return this.creditos;
+		return this.creditos == null ? this.creditos : 0;
 	}
 	
 	
