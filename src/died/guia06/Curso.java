@@ -2,6 +2,7 @@ package died.guia06;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -59,10 +60,16 @@ public class Curso {
 	 * @param cupo Nueva cantidad de cupos para el curso.
 	 **/
 	public void setCupo(Integer cupo) throws IllegalArgumentException{
-		if(cupo < this.inscriptos.size()) {
-			throw new IllegalArgumentException("Ya tiene mas inscriptos que el cupo que desea setear al curso.");
-		}
-		else this.cupo = cupo;
+		try {		
+			log.registrar(this, "modificar cupo", " de " + this.cupo + " a " + cupo);
+			if(cupo < this.inscriptos.size()) {
+				throw new IllegalArgumentException("Ya tiene mas inscriptos que el cupo que desea setear al curso.");
+			}
+			else this.cupo = cupo;
+		}catch (IOException e) {
+			System.out.println("Sucedió un error al inscribir un alumno. Error:" + e.getMessage());
+			e.printStackTrace();			
+		}		
 	}	
 		
 	public Curso(Integer id, String nombre, Integer cicloLectivo,Integer cupo, Integer creditos, Integer creditosRequeridos) throws IllegalArgumentException{
@@ -197,7 +204,7 @@ public class Curso {
 			System.out.println("Total alumnos inscriptos "+this.inscriptos.size()+".");
 			
 		System.out.println("--------------------------------");
-		this.inscriptos.sort(c);
+		Collections.sort(this.inscriptos,c);
 		
 		for(Alumno alumno : this.inscriptos) {
 			System.out.println(alumno.toString());
