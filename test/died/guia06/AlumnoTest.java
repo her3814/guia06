@@ -7,18 +7,19 @@ import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 class AlumnoTest {
+	@Before
+	public void init() {
+	    System.out.println("@Before");
+	}
+	
 	private Alumno alumnoA = new Alumno("Hernan",12345);
-	private Curso cursoA = new Curso();
-	private Curso cursoB = new Curso();
-	private Curso cursoC = new Curso();
+	private Curso cursoA = new Curso(1,"CursoA",2020,10,5,0);
+	private Curso cursoB = new Curso(2,"CursoB",2020,5,5,5);
+	private Curso cursoC = new Curso(3,"CursoC",2020,1,5,0);
 	
 	public AlumnoTest() {
 		
 	}
-@Before
-public void init() {
-    System.out.println("@Before");
-}
 	@Test
 	public void testCrearAlumnoSinNombre() {
 		try {
@@ -84,7 +85,7 @@ public void init() {
 		alumnoA.inscripcionAceptada(cursoB);
 		alumnoA.inscripcionAceptada(cursoC);
 		
-		var cursoD = new Curso();
+		var cursoD = new Curso(4,"Curso4",2020,5,1,0);
 		
 		try {			
 			alumnoA.aprobar(cursoD);

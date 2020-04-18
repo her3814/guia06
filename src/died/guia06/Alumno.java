@@ -18,9 +18,14 @@ public class Alumno implements Comparable<Alumno> {
 		return nroLibreta;
 	}
 
-	//Se implementa el constructor con nombre y numero de libreta. A fin de que una vez
-	//dados estos datos no puedan editarse.
+	/**
+	 * Inicializa una nueva instancia de alumno
+	 * @param nombre
+	 * @param nroLibreta
+	 * @throws IllegalArgumentException
+	 */
 	public Alumno(String nombre, Integer nroLibreta) throws IllegalArgumentException {
+		
 		super();
 		
 		if(nombre==null)
@@ -38,31 +43,58 @@ public class Alumno implements Comparable<Alumno> {
 
 
 	public int creditosObtenidos() {
+		
 		int creditos = 0;
+		
 		if(aprobados != null)
 			for(Curso curso : aprobados) {
 				creditos += curso.getCreditos();
 			}
 		
 		return creditos;
+		
 	}
 
-	public void aprobar(Curso c) throws IllegalArgumentException{
+	 @Override 
+	 public String toString() {
+		    StringBuilder result = new StringBuilder();
+		    String NL = System.getProperty("line.separator");
+		    String HR = "--------------------------------";
+		    result.append("Libreta Universitaria: " + this.nroLibreta + NL);
+		    result.append("Nombre: " + this.nombre + NL);
+		    result.append(HR + NL);
+		    
+		return result.toString();
+	}
+	
+	public void aprobar(Curso c) throws IllegalArgumentException{		
+		
 		if(!this.cursando.contains(c)) {
 			throw new IllegalArgumentException("No puede aprobar un curso sin estar cursandolo");
+		}
+
+		if(this.aprobados.contains(c)) {
+			throw new IllegalArgumentException("No puede aprobar un curso ya aprobado.");
 		}
 		
 		if(this.cursando.contains(c)) {
 			this.cursando.remove(c);
 			this.aprobados.add(c);
 		}
+		
 	}
 
 	public void inscripcionAceptada(Curso c) throws IllegalArgumentException{
+		
 		if(this.cursando.size()>=3) {
 			throw new IllegalArgumentException("No puede inscribirse a mas de 3 cursos a la vez.");
 		}		
-			this.cursando.add(c);			
+		
+		if(this.aprobados.contains(c)) {
+			throw new IllegalArgumentException("No puede inscribirse a un curso aprobado.");
+		}		
+		
+		this.cursando.add(c);			
 	}
 
 	public boolean inscriptoEn(Curso curso) {
@@ -70,32 +102,45 @@ public class Alumno implements Comparable<Alumno> {
 	}
 
 	public boolean aproboCurso(Curso curso) {
+		
 		return aprobados.contains(curso);
+		
 	}
-	public int getCantidadCursosInscripto() {		
+	public int getCantidadCursosInscripto() {
+		
 		return this.cursando.size();
+		
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		
 		if (this == obj)
 			return true;
+		
 		if (obj == null)
 			return false;
+		
 		if (getClass() != obj.getClass())
 			return false;
+		
 		Alumno other = (Alumno) obj;
-		if (this.getNroLibreta() == null) {
+		
+		if (this.getNroLibreta() == null) {			
 			if (other.getNroLibreta() != null)
-				return false;
-		} else if (!this.getNroLibreta().equals(other.getNroLibreta()))
+				return false;			
+		} 		
+		else if (!this.getNroLibreta().equals(other.getNroLibreta()))
 			return false;
+		
 		return true;
 	}
 
 	@Override
 	public int compareTo(Alumno o) {
+		
 		return this.getNombre().compareTo(o.getNombre());
+		
 	}
 
 }
