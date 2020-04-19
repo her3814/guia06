@@ -11,7 +11,7 @@ import died.guia06.Alumno;
 public class AlumnoComparatorCreditos implements Comparator<Alumno> {
 	@Override
 	public int compare(Alumno o1, Alumno o2) {
-		return o1.creditosObtenidos() - o2.creditosObtenidos();
+		return (o2.creditosObtenidos() - o1.creditosObtenidos());
 	}
 
 }

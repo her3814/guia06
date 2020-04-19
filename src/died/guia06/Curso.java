@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import died.guia06.util.AlumnoComparatorCreditos;
 import died.guia06.util.AlumnoComparatorNroLibreta;
 import died.guia06.util.Registro;
 
@@ -72,7 +73,7 @@ public class Curso {
 		}		
 	}	
 		
-	public Curso(Integer id, String nombre, Integer cicloLectivo,Integer cupo, Integer creditos, Integer creditosRequeridos) throws IllegalArgumentException{
+	public Curso(Integer id, String nombre, Integer cicloLectivo, Integer cupo, Integer creditos, Integer creditosRequeridos) throws IllegalArgumentException{
 
 		super();
 		if(id==null)
@@ -123,25 +124,28 @@ public class Curso {
 		
 		try {
 			log.registrar(this, "inscribir ",a.toString());
+			
 			if(a.creditosObtenidos() < this.creditosRequeridos)
 				return false;
-			
-			if(this.cupo < this.inscriptos.size())
+
+			if(this.cupo <= this.inscriptos.size())
+				return false;
+
+			if(a.getCantidadCursosInscripto() >= 3)
 				return false;
 			
-			if(a.getCantidadCursosInscripto() >= 3)
+			if(this.inscriptos.contains(a))
 				return false;
 			
 			this.inscriptos.add(a);
 			a.inscripcionAceptada(this);
-						
+			return true;			
 		} 
 		catch (IOException e) {
 			System.out.println("Sucedió un error al inscribir un alumno. Error:" + e.getMessage());
-			e.printStackTrace();			
-		}
-		
-		return false;
+			e.printStackTrace();	
+			return false;
+		}		
 	}
 	
 	
@@ -175,12 +179,12 @@ public class Curso {
 	}
 
 	/**
-	 * Imprime los inscriptos por numero de libreta
+	 * Imprime los inscriptos por creditos Obtenidos
 	 */
 	public void imprimirInscriptosCreditos() {
 		try {
 			log.registrar(this, "imprimir listado por cant creditos obtenidos",this.inscriptos.size()+ " registros ");
-			Comparator<Alumno> comparador = new AlumnoComparatorNroLibreta();
+			Comparator<Alumno> comparador = new AlumnoComparatorCreditos();
 			this.imprimirInscriptosPor(comparador, "Orden por Créditos Obtenidos");
 		} 
 		catch (IOException e) {
@@ -206,10 +210,9 @@ public class Curso {
 		System.out.println("--------------------------------");
 		Collections.sort(this.inscriptos,c);
 		
-		for(Alumno alumno : this.inscriptos) {
-			System.out.println(alumno.toString());
-		};
-	}
+		System.out.println(this.inscriptos);
+		
+		}
 	
 
 

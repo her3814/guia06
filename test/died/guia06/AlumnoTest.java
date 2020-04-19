@@ -3,11 +3,11 @@ package died.guia06;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AlumnoTest {
-	@Before
+	@BeforeEach
 	public void init() {
 	    System.out.println("@Before");
 	}
