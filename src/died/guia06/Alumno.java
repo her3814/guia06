@@ -59,10 +59,9 @@ public class Alumno implements Comparable<Alumno> {
 	 public String toString() {
 		    StringBuilder result = new StringBuilder();
 		    String NL = System.getProperty("line.separator");
-		    String HR = "--------------------------------";
 		    result.append("Libreta Universitaria: " + this.nroLibreta + NL);
 		    result.append("Nombre: " + this.nombre + NL);
-		    result.append(HR + NL);
+		    result.append("Creditos: " + this.creditosObtenidos() + NL);
 		    
 		return result.toString();
 	}
@@ -106,10 +105,15 @@ public class Alumno implements Comparable<Alumno> {
 		return aprobados.contains(curso);
 		
 	}
+	
 	public int getCantidadCursosInscripto() {
 		
 		return this.cursando.size();
 		
+	}
+public int getCantidadCursosInscripto(int cicloLectivo) {		
+		var filtro = this.cursando.stream().filter(c -> (c.getCicloLectivo() == cicloLectivo)).toArray();
+		return filtro.length;
 	}
 
 	@Override

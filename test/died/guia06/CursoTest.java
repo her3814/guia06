@@ -141,16 +141,18 @@ public class CursoTest {
 		
 		
 		var string = "IMPRIMIR ALUMNOS - Orden Alfabético" + System.lineSeparator() +
-				"CURSO - Curso Java" + System.lineSeparator() +
+				System.lineSeparator() +
+				"1 - Curso Java(2020)" + System.lineSeparator() +
+				System.lineSeparator() +
 				"--------------------------------" + System.lineSeparator() +
 				"Total alumnos inscriptos 2." + System.lineSeparator() +
 				"--------------------------------" + System.lineSeparator() +
 				"[Libreta Universitaria: 12346" + System.lineSeparator() +
 				"Nombre: Armando Lopez" + System.lineSeparator() +
-				"--------------------------------" +System.lineSeparator() + 
+				"Creditos: 0" + System.lineSeparator() +
 				", Libreta Universitaria: 12345" + System.lineSeparator() +
 				"Nombre: Hernan Lopez" + System.lineSeparator() +
-				"--------------------------------" +System.lineSeparator() + 
+				"Creditos: 0" + System.lineSeparator() +
 				"]" + System.lineSeparator();
 
 		assertEquals(string,outContent.toString());
@@ -168,16 +170,18 @@ public class CursoTest {
 		this.cursoA.imprimirInscriptosNroLibreta();		
 		
 		var string = "IMPRIMIR ALUMNOS - Orden por Número de Libreta" + System.lineSeparator() +
-				"CURSO - Curso Java" + System.lineSeparator() +
+				System.lineSeparator() +
+				"1 - Curso Java(2020)" + System.lineSeparator() +
+				System.lineSeparator() +
 				"--------------------------------" + System.lineSeparator() +
 				"Total alumnos inscriptos 2." + System.lineSeparator() +
 				"--------------------------------" + System.lineSeparator() +
 				"[Libreta Universitaria: 12345" + System.lineSeparator() +
 				"Nombre: Hernan Lopez" + System.lineSeparator() +
-				"--------------------------------" +System.lineSeparator() + 
+				"Creditos: 0" + System.lineSeparator() +
 				", Libreta Universitaria: 12346" + System.lineSeparator() +
 				"Nombre: Armando Lopez" + System.lineSeparator() +
-				"--------------------------------" +System.lineSeparator() + 
+				"Creditos: 0" + System.lineSeparator() +
 				"]" + System.lineSeparator();
 
 		assertEquals(string,outContent.toString());
@@ -197,16 +201,18 @@ public class CursoTest {
 		this.cursoA.imprimirInscriptosCreditos();		
 		
 		var string = "IMPRIMIR ALUMNOS - Orden por Créditos Obtenidos" + System.lineSeparator() +
-				"CURSO - Curso Java" + System.lineSeparator() +
+				System.lineSeparator() +
+				"1 - Curso Java(2020)" + System.lineSeparator() +
+				System.lineSeparator() +
 				"--------------------------------" + System.lineSeparator() +
 				"Total alumnos inscriptos 2." + System.lineSeparator() +
 				"--------------------------------" + System.lineSeparator() +
 				"[Libreta Universitaria: 12346" + System.lineSeparator() +
 				"Nombre: Armando Lopez" + System.lineSeparator() +
-				"--------------------------------" +System.lineSeparator() + 
+				"Creditos: 5" + System.lineSeparator() +
 				", Libreta Universitaria: 12345" + System.lineSeparator() +
 				"Nombre: Hernan Lopez" + System.lineSeparator() +
-				"--------------------------------" +System.lineSeparator() + 
+				"Creditos: 0" + System.lineSeparator() +
 				"]" + System.lineSeparator();
 		
 		assertEquals(string,outContent.toString());

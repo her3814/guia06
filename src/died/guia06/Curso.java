@@ -131,7 +131,7 @@ public class Curso {
 			if(this.cupo <= this.inscriptos.size())
 				return false;
 
-			if(a.getCantidadCursosInscripto() >= 3)
+			if(a.getCantidadCursosInscripto(this.getCicloLectivo()) >= 3)
 				return false;
 			
 			if(this.inscriptos.contains(a))
@@ -200,7 +200,7 @@ public class Curso {
 	 */
 	private void imprimirInscriptosPor(Comparator<?super Alumno> c, String comparatorDescriptor) {
 		System.out.println("IMPRIMIR ALUMNOS - " + comparatorDescriptor);
-		System.out.println("CURSO - " + this.nombre);
+		System.out.println(this.toString());
 		System.out.println("--------------------------------");
 		if(this.inscriptos.size()==0)
 			System.out.println("AVISO: SIN ALUMNOS INSCRIPTOS EN EL CURSO.");
@@ -213,6 +213,10 @@ public class Curso {
 		System.out.println(this.inscriptos);
 		
 		}
+	
+	public String toString() {
+		return (System.lineSeparator() + this.id + " - " + this.nombre + "(" + this.cicloLectivo +")" + System.lineSeparator());
+	}
 	
 
 
