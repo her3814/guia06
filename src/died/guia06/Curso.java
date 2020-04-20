@@ -8,7 +8,12 @@ import java.util.List;
 
 import died.guia06.util.AlumnoComparatorCreditos;
 import died.guia06.util.AlumnoComparatorNroLibreta;
+import died.guia06.util.InscripcionAlumnoYaInscriptoException;
+import died.guia06.util.InscripcionCreditosInsuficientesException;
+import died.guia06.util.InscripcionCupoCompletoException;
+import died.guia06.util.InscripcionExcesoMismoCicloException;
 import died.guia06.util.Registro;
+import died.guia06.util.RegistroAuditoriaException;
 
 /**
  * Clase que representa un curso. Un curso se identifica por su ID y por su nombre y ciclo lectivo.
@@ -148,7 +153,41 @@ public class Curso {
 		}		
 	}
 	
-	
+	/**
+	 * 
+	 * @param a Alumno a inscribir
+	 * @throws InscripcionCreditosInsuficientesException
+	 * @throws InscripcionCupoCompletoException
+	 * @throws InscripcionExcesoMismoCicloException
+	 * @throws InscripcionAlumnoYaInscriptoException
+	 * @throws RegistroAuditoriaException
+	 */
+	public void inscribirAlumno(Alumno a) throws InscripcionCreditosInsuficientesException, InscripcionCupoCompletoException, InscripcionExcesoMismoCicloException, InscripcionAlumnoYaInscriptoException, RegistroAuditoriaException {
+		
+		try {
+			log.registrar(this, "inscribir ",a.toString());
+			
+			if(a.creditosObtenidos() < this.creditosRequeridos)
+				throw new InscripcionCreditosInsuficientesException("El alumno " + a.getNombre() + " no posee creditos suficientes para inscribirse.");
+
+			if(this.cupo <= this.inscriptos.size())
+				throw new InscripcionCupoCompletoException("El cupo del curso se encuentra lleno. No es posible inscribir nuevos alumnos.");
+
+			if(a.getCantidadCursosInscripto(this.getCicloLectivo()) >= 3)
+				throw new InscripcionExcesoMismoCicloException("El alumno " + a.getNombre() + " no puede inscribirse a mas de 3 cursos del mismo ciclo lectivo.");
+			
+			if(this.inscriptos.contains(a))
+				throw new InscripcionAlumnoYaInscriptoException("El alumno " + a.getNombre() + " ya está inscripto a este curso.");
+			
+			this.inscriptos.add(a);
+			a.inscripcionAceptada(this);
+		} 
+		catch (IOException e) {
+			System.out.println("Sucedió un error al inscribir un alumno. Error:" + e.getMessage());
+			e.printStackTrace();	
+			throw new RegistroAuditoriaException("Error al escribir el archivo de log del curso.", e);
+		}		
+	}
 	/**
 	 * Imprime los inscriptos en orden alfabetico
 	 */
