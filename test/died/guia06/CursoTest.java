@@ -97,6 +97,7 @@ public class CursoTest {
 			assertEquals(e.getClass(),InscripcionCupoCompletoException.class);
 		}
 	}
+	
 	@Test
 	public void testInscribirAlumnoSinCreditosExc() {
 		try {
