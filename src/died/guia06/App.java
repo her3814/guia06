@@ -3,6 +3,12 @@ package died.guia06;
 import java.util.ArrayList;
 import java.util.List;
 
+import died.guia06.util.InscripcionAlumnoYaInscriptoException;
+import died.guia06.util.InscripcionCreditosInsuficientesException;
+import died.guia06.util.InscripcionCupoCompletoException;
+import died.guia06.util.InscripcionExcesoMismoCicloException;
+import died.guia06.util.RegistroAuditoriaException;
+
 public class App {
 	private final String NL = System.lineSeparator() + "--------------------------------" + System.lineSeparator();
 	
@@ -186,13 +192,20 @@ public class App {
 			
 			else {
 				
-				if(curso.inscribir(alumno)) {
+				try {
+					curso.inscribirAlumno(alumno);
 					System.out.println("INSCRIPCION REALIZADA");
 					System.out.println(curso.toString());
 					System.out.println(alumno.toString());
-				}else {
+				} catch (InscripcionCreditosInsuficientesException | InscripcionCupoCompletoException
+						| InscripcionExcesoMismoCicloException | InscripcionAlumnoYaInscriptoException
+						| RegistroAuditoriaException e) {
+					// TODO Auto-generated catch block
 					System.out.println("NO SE PUDO INSCRIBIR AL ALUMNO LIBRETA N°: " + alumno.getNroLibreta() + " EN EL CURSO " + curso.getNombre());
+					System.out.println("RAZON: " + e.getMessage());
+				
 				}
+				
 			}
 			
 		}
