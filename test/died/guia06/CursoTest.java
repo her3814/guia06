@@ -9,6 +9,12 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import died.guia06.util.InscripcionAlumnoYaInscriptoException;
+import died.guia06.util.InscripcionCreditosInsuficientesException;
+import died.guia06.util.InscripcionCupoCompletoException;
+import died.guia06.util.InscripcionExcesoMismoCicloException;
+import died.guia06.util.RegistroAuditoriaException;
+
 public class CursoTest {
 	private Curso cursoA;
 	private Curso cursoB;
@@ -30,6 +36,81 @@ public class CursoTest {
 
 	
 	@Test
+	public void testInscribirAlumnoExc() {
+		try {
+			this.cursoA.inscribirAlumno(this.alumno);
+			assertTrue(this.alumno.inscriptoEn(cursoA));
+		} catch (InscripcionCreditosInsuficientesException | InscripcionCupoCompletoException
+				| InscripcionExcesoMismoCicloException | InscripcionAlumnoYaInscriptoException
+				| RegistroAuditoriaException e) {
+			// TODO Auto-generated catch block
+			assertEquals(null,e);
+		}
+	}
+	
+	@Test
+	public void testInscribirExcesoMismoCicloLectivoExc() {
+		Curso curso3 = new Curso(4,"Curso Introductorio",2020,3,5,0);
+		Curso curso4 = new Curso(5,"Curso Matematico",2020,3,5,0);
+		Curso curso5 = new Curso(5,"Curso Fisica",2020,3,5,0);
+
+		cursoA.inscribir(this.alumno);
+		curso3.inscribir(this.alumno);
+		curso4.inscribir(this.alumno);		
+		try {
+			curso5.inscribirAlumno(this.alumno);
+			assertFalse(this.alumno.inscriptoEn(curso5));
+		} catch (InscripcionCreditosInsuficientesException | InscripcionCupoCompletoException
+				| InscripcionExcesoMismoCicloException | InscripcionAlumnoYaInscriptoException
+				| RegistroAuditoriaException e) {
+			// TODO Auto-generated catch block
+			assertEquals(e.getClass(),InscripcionExcesoMismoCicloException.class);
+		}
+	}
+	
+	@Test
+	public void testInscribirRegistroAuditoriaExc() {	
+		try {
+			this.cursoA.inscribirAlumno(this.alumno);
+			assertTrue(this.alumno.inscriptoEn(this.cursoA));
+		} catch (RegistroAuditoriaException | InscripcionCreditosInsuficientesException | InscripcionCupoCompletoException | InscripcionExcesoMismoCicloException | InscripcionAlumnoYaInscriptoException e) {
+			// TODO Auto-generated catch block
+			assertEquals(e.getClass(),RegistroAuditoriaException.class);
+		}
+	}
+	
+	@Test
+	public void testInscribirCupoLlenoExc() {
+
+		Alumno alumno3 = new Alumno("Hernan Lopez",12347);
+		Alumno alumno4 = new Alumno("Hernan Lopez",12348);
+		this.cursoA.inscribir(this.alumno);
+		this.cursoA.inscribir(this.alumno2);
+		this.cursoA.inscribir(alumno3);		
+		try {
+			this.cursoA.inscribirAlumno(alumno4);
+			assertFalse(alumno4.inscriptoEn(cursoC));
+		} catch (InscripcionCreditosInsuficientesException | InscripcionCupoCompletoException
+				| InscripcionExcesoMismoCicloException | InscripcionAlumnoYaInscriptoException
+				| RegistroAuditoriaException e) {
+			// TODO Auto-generated catch block
+			assertEquals(e.getClass(),InscripcionCupoCompletoException.class);
+		}
+	}
+	@Test
+	public void testInscribirAlumnoSinCreditosExc() {
+		try {
+			this.cursoC.inscribirAlumno(this.alumno);
+			assertFalse(this.alumno.inscriptoEn(cursoC));
+		} catch (InscripcionCreditosInsuficientesException | InscripcionCupoCompletoException
+				| InscripcionExcesoMismoCicloException | InscripcionAlumnoYaInscriptoException
+				| RegistroAuditoriaException e) {
+			// TODO Auto-generated catch block
+			assertEquals(e.getClass(),InscripcionCreditosInsuficientesException.class);
+		}
+	}
+	
+	@Test
 	public void testGetNombre(){
 		assertEquals(this.cursoA.getNombre(), "Curso Java");
 	}
@@ -46,7 +127,7 @@ public class CursoTest {
 	
 	
 	@Test
-	public void testInscribirAlumno() {
+	public void testInscribir() {
 		assertTrue(this.cursoA.inscribir(this.alumno));			
 	}
 
